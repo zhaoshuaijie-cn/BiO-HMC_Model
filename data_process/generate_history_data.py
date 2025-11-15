@@ -1,22 +1,22 @@
 import random
 
-# 产生n个0和1组成的序列，用空格分隔，其中1的个数的占比为x%
+# Generate n sequences of 0s and 1s, separated by spaces, where the number of 1s accounts for x%.
 def generate_binary_sequence(n, x):
-    # x 可以是百分比形式（如 20%）或小数形式（如 0.2）
+    # X can be a percentage (such as 20%) or a decimal (such as 0.2).
     if isinstance(x, str) and '%' in x:
-        x = float(x.strip('%')) / 100  # 将百分比转换为小数
+        x = float(x.strip('%')) / 100  # Convert percentages to decimals
     elif isinstance(x, (float, int)):
         x = float(x)
 
-    # 计算 1 的数量
+    # Calculate the number of 1.
     num_ones = int(n * x)
     num_zeros = n - num_ones
 
-    # 生成序列
+    # Generating sequence
     sequence = [1] * num_ones + [0] * num_zeros
     random.shuffle(sequence)  # 随机打乱序列
 
-    # 将序列转换为字符串，并用空格分隔
+    # Converts a sequence into a string separated by spaces.
     sequence_str = ' '.join(map(str, sequence))
 
     return sequence_str
@@ -37,12 +37,12 @@ def generate_binary_sequence_test():
         print(result)
 
 """
-该函数用于生成真实数据集的历史数据，其中
-total_vote表示总的投票数
-vote_list表示每个选项的投票数，这个中每个选项的顺序应该与GalaxyZoo.txt中组织的OC Model的顺序对应起来
-history_num表示要产生的历史数据的数量
-根据这些参数产生一个列表，表示每个选项需要生成的历史数据中1的比例
-返回一个多维列表，其中每个列表表示一个选项的历史数据
+This function is used to generate historical data of real data sets, where
+Total_vote represents the total number of votes.
+Vote_list indicates the number of votes for each option, and the order of each option in this list should correspond to the order of OC Model organized in GalaxyZoo.txt.
+History_num indicates the amount of historical data to be generated.
+According to these parameters, a list is generated, indicating the proportion of 1 in the historical data that each option needs to generate.
+Returns a multidimensional list, where each list represents the historical data of an option.
 """
 def generate_real_history_data(total_vote,vote_list,history_num):
     ratio = []
@@ -50,7 +50,7 @@ def generate_real_history_data(total_vote,vote_list,history_num):
         ratio.append(vote_list[i]/total_vote)
     # print(ratio)
 
-    # 每个选项对应的比例有了之后，调用函数生成历史数据
+    # After the proportion corresponding to each option is known, the function is called to generate historical data.
     res = []
     for j in range(len(ratio)):
         temp = generate_binary_sequence(history_num, ratio[j])
